@@ -14,6 +14,9 @@ public interface UserService {
     //삭제할 데이터를 찾았으면 true,아니면 false
     public boolean deleteUser(String email);
     //모든 회원정보를 반환하다.
-    public Iterator<User> getUserS();
+    public Iterator<User> getUsers();
+
+    //email에 해당하는 회원정보가 있을 경우 0보다 큰 값을 반환
+    public boolean exists(String email);
 
 }

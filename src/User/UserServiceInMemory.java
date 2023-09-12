@@ -35,17 +35,10 @@ public class UserServiceInMemory implements UserService{
 
     @Override
     public boolean deleteUser(String email) {
-        int findIndex = -1;
-        for (int i = 0; i < users.size(); i++){
-            User u = users.get(i);
-            if(u.getEmail().equals(email)){
-                findIndex = i;
-                users.remove(i);
-                break;
-            }
-        }
+        int findIndex = getFindIndex(email);
 
         if (findIndex > -1) {
+            users.remove(findIndex);
             return true;
         }else{
             return false;
@@ -56,7 +49,29 @@ public class UserServiceInMemory implements UserService{
     //users정보를 복사한 후 정보를 리턴할 것이냐? -> 삭제한 정보도 나올 수 있음
     //읽기전용으로 만들어줌 => 내부에서만 수정 가능
     @Override
-    public Iterator<User> getUserS() {
+    public Iterator<User> getUsers() {
         return users.iterator();
+    }
+
+    @Override
+    public boolean exists(String email) {
+
+        if (getFindIndex(email) >= 0){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+    public int getFindIndex(String email){
+        int findIndex = -1;
+        for (int i = 0; i < users.size(); i++){
+            User u = users.get(i);
+            if(u.getEmail().equals(email)){
+                findIndex = i;
+                break;
+            }
+        }
+        return findIndex;
     }
 }
